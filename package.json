@@ -5,17 +5,15 @@
   "main": "build/index.js",
   "scripts": {
     "dev": "watch 'npm run build' src",
-    "build": "babel src -d build",
+    "build": "babel src -d build --ignore '**/*.spec.js'",
     "test": "jest",
+    "coverage": "jest --coverage",
     "test:watch": "npm test -- --watch",
     "prepublish": "npm run build"
   },
   "babel": {
     "presets": [
       "@babel/preset-env"
-    ],
-    "ignore": [
-      "**/*.spec.js"
     ]
   },
   "husky": {
