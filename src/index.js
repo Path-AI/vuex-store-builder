@@ -23,13 +23,13 @@ export const defaultActionHydrator = (
   return response;
 };
 
-export const request = slug =>
+export const requestBuilder = slug =>
   function(state) {
     state[loaded(slug)] = false;
     state[errored(slug)] = {};
   };
 
-export const receive = (slug, getKey) =>
+export const receiveBuilder = (slug, getKey) =>
   function(state, data) {
     if (Array.isArray(data)) {
       data.forEach(datum => (state.byId[getKey(datum)] = datum));
@@ -39,7 +39,7 @@ export const receive = (slug, getKey) =>
     state[loaded(slug)] = true;
   };
 
-export const fail = slug =>
+export const failBuilder = slug =>
   function(state, error) {
     state[errored(slug)] = error;
   };
@@ -58,9 +58,9 @@ export const vuexStoreBuilder = (
       receivedMutationName,
       failedMutationName
     }),
-    requestMutation = request(slug),
-    receiveMutation = receive(slug, getKey),
-    failMutation = fail(slug),
+    request = requestBuilder(slug),
+    receive = receiveBuilder(slug, getKey),
+    fail = failBuilder(slug),
     state = {},
     getters = {},
     mutations = {},
@@ -79,9 +79,9 @@ export const vuexStoreBuilder = (
     ...getters
   },
   mutations: {
-    [requestedMutationName]: requestMutation,
-    [receivedMutationName]: receiveMutation,
-    [failedMutationName]: failMutation,
+    [requestedMutationName]: request,
+    [receivedMutationName]: receive,
+    [failedMutationName]: fail,
     ...mutations
   },
   actions: {
