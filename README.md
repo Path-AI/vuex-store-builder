@@ -1,7 +1,5 @@
 # vuex-store-builder
 Customizable utility functions to generate vuex stores that facilitate network requests.
-## Table of Contents
-[generated table of contents here]
 ### About
 `vuexStoreBuilder` is a convenience function that generates a Vuex store configuration containing an action that makes a network call. This allows developers to offload weighty vuex configuration syntax onto this utility. 
 
