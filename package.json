@@ -13,6 +13,9 @@
   "babel": {
     "presets": [
       "@babel/preset-env"
+    ],
+    "ignore": [
+      "**/*.spec.js"
     ]
   },
   "husky": {
@@ -36,13 +39,13 @@
   },
   "homepage": "https://github.com/Path-AI/vuex-store-builder#readme",
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
-    "babel-cli": "^6.26.0",
-    "jest": "^24.9.0",
-    "watch": "^1.0.2",
     "husky": "^3.0.4",
+    "jest": "^24.9.0",
     "prettier": "^1.18.2",
-    "pretty-quick": "^1.11.1"
+    "pretty-quick": "^1.11.1",
+    "watch": "^1.0.2"
   },
   "dependencies": {
     "babel-preset-latest": "^6.24.1"
