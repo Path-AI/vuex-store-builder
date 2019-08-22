@@ -1,48 +1,6 @@
-import { loaded, errored, requested, received, failed } from "./stringBuilders";
-
-export const defaultActionBuilder = (
-  slug,
-  call,
-  {
-    requestedMutationName = requested(slug),
-    receivedMutationName = received(slug),
-    failedMutationName = failed(slug),
-    catchBlock = function(error) {
-      this.commit(failedMutationName, error);
-    }
-  } = {}
-) => async ({ commit }, params) => {
-  let response;
-  commit(requestedMutationName);
-  try {
-    response = await call(params);
-  } catch (error) {
-    return catchBlock.call({ commit }, error);
-  }
-  commit(receivedMutationName, response);
-  return response;
-};
-
-export const requestBuilder = slug =>
-  function(state) {
-    state[loaded(slug)] = false;
-    state[errored(slug)] = {};
-  };
-
-export const receiveBuilder = (slug, getKey) =>
-  function(state, data) {
-    if (Array.isArray(data)) {
-      data.forEach(datum => (state.byId[getKey(datum)] = datum));
-    } else {
-      state.byId[getKey(data)] = data;
-    }
-    state[loaded(slug)] = true;
-  };
-
-export const failBuilder = slug =>
-  function(state, error) {
-    state[errored(slug)] = error;
-  };
+import { loaded, errored, requested, received, failed } from "./strings";
+import { requestBuilder, receiveBuilder, failBuilder } from "./mutations";
+import { defaultActionBuilder } from "./actions";
 
 export const vuexStoreBuilder = (
   slug,
