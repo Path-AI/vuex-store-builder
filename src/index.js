@@ -1,6 +1,6 @@
 import { loaded, errored, requested, received, failed } from "./stringBuilders";
 
-export const defaultActionHydrator = (
+export const defaultActionBuilder = (
   slug,
   call,
   {
@@ -52,8 +52,8 @@ export const vuexStoreBuilder = (
     requestedMutationName = requested(slug),
     receivedMutationName = received(slug),
     failedMutationName = failed(slug),
-    actionHydrator = defaultActionHydrator,
-    action = actionHydrator(slug, call, {
+    actionBuilder = defaultActionBuilder,
+    action = actionBuilder(slug, call, {
       requestedMutationName,
       receivedMutationName,
       failedMutationName
