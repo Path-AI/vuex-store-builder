@@ -164,7 +164,8 @@ In order to set a debugger or breakpoint inside of the action or mutation functi
 Most of the default configuration can be overridden through the optional options argument.
 
 ```javascript
-import vuexStoreBuilder, { loaded } from "vuex-store-builder";
+import vuexStoreBuilder from "vuex-store-builder";
+import { loaded } from "vuex-store-builder/strings";
 import { getListOfDogs } from "api/dogs";
 
 export const getDogId = ({ dogId }) => dogId;
