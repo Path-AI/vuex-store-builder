@@ -16,8 +16,46 @@ describe("mutation builders", () => {
       expect(state[mockedValue]).toEqual(initial);
     });
   });
-  describe.skip("receiveBuilder", () => {
+  describe("receiveBuilder", () => {
     const getKey = jest.fn(({ id }) => id);
+    it("handles data arrays", () => {
+      const datum1 = { id: 123 };
+      const datum2 = { id: 234 };
+      const state = {
+        byId: {}
+      };
+      receiveBuilder(slug, getKey)(state, [datum1, datum2]);
+      expect(state.byId).toEqual({
+        123: datum1,
+        234: datum2
+      });
+    });
+    it("handles data singletons", () => {
+      const datum = { id: 123 };
+      const state = {
+        byId: {}
+      };
+      receiveBuilder(slug, getKey)(state, datum);
+      expect(state.byId).toEqual({
+        123: datum
+      });
+    });
+    it("flips loaded boolean", () => {
+      loaded.mockImplementationOnce(() => "loaded");
+      const state = {
+        byId: {}
+      };
+      receiveBuilder(slug, getKey)(state, {});
+      expect(state.loaded).toBe(true);
+    });
   });
-  describe.skip("failBuilder", () => {});
+  describe("failBuilder", () => {
+    it("passes error into state", () => {
+      errored.mockImplementationOnce(() => "errored");
+      const state = {};
+      const error = {};
+      failBuilder(slug)(state, error);
+      expect(state.errored).toBe(error);
+    });
+  });
 });
