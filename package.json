@@ -1,6 +1,6 @@
 {
   "name": "vuex-store-builder",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Customizable utility functions to generate vuex stores, facilitating network requests.",
   "main": "build/index.js",
   "scripts": {
@@ -52,7 +52,5 @@
     "pretty-quick": "^1.11.1",
     "watch": "^1.0.2"
   },
-  "dependencies": {
-    "babel-preset-latest": "^6.24.1"
-  }
+  "dependencies": {}
 }
