@@ -2,11 +2,13 @@ import { loaded, errored, requested, received, failed } from "./strings";
 import { requestBuilder, receiveBuilder, failBuilder } from "./mutations";
 import { defaultActionBuilder } from "./actions";
 
+export const defaultGetKey = ({ id }) => id;
+
 export const vuexStoreBuilder = (
   slug,
   call,
   {
-    getKey = ({ id }) => id,
+    getKey = defaultGetKey,
     requestedMutationName = requested(slug),
     receivedMutationName = received(slug),
     failedMutationName = failed(slug),

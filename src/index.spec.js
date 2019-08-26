@@ -2,7 +2,7 @@ import { requested, received, failed, loaded, errored } from "./strings";
 import { requestBuilder, receiveBuilder, failBuilder } from "./mutations";
 import { defaultActionBuilder } from "./actions";
 
-import vuexStoreBuilder from "./index";
+import vuexStoreBuilder, { defaultGetKey } from "./index";
 
 jest.mock("./strings");
 jest.mock("./mutations");
@@ -25,14 +25,13 @@ describe("vuexStoreBuilder", () => {
         });
       });
       describe("function builders", () => {
-        const getKey = {};
         it.each([
-          ["requestBuilder", slug, requestBuilder],
-          ["receiveBuilder", slug, receiveBuilder],
-          ["failBuilder", slug, failBuilder]
-        ])("%s receives %s as arguments", (name, arg, builder) => {
+          ["requestBuilder", requestBuilder, [slug]],
+          ["receiveBuilder", receiveBuilder, [slug, defaultGetKey]],
+          ["failBuilder", failBuilder, [slug]]
+        ])("%s receives %s as arguments", (name, builder, args) => {
           vuexStoreBuilder(slug, call);
-          expect(builder.mock.calls[0][0]).toEqual(arg);
+          expect(builder.mock.calls[0]).toEqual(args);
         });
       });
     });
