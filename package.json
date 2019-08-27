@@ -7,7 +7,7 @@
     "dev": "watch 'npm run build' src",
     "build": "babel src -d build --ignore '**/*.spec.js'",
     "test": "jest",
-    "coverage": "jest --coverage",
+    "test:coverage": "jest --coverage",
     "test:watch": "npm test -- --watch",
     "prepublish": "npm run build"
   },
@@ -46,6 +46,7 @@
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "codecov": "^3.5.0",
     "husky": "^3.0.4",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
