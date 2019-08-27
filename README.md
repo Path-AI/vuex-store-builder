@@ -1,5 +1,8 @@
 # vuex-store-builder
 
+[![Build Status](https://travis-ci.org/Path-AI/vuex-store-builder.svg?branch=master)](https://travis-ci.org/Path-AI/vuex-store-builder) [![codecov](https://codecov.io/gh/Path-AI/vuex-store-builder/branch/master/graph/badge.svg)](https://codecov.io/gh/Path-AI/vuex-store-builder)
+
+
 Customizable utility functions to generate vuex stores that facilitate network requests.
 
 ### About
