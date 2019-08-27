@@ -28,9 +28,6 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "jest": {
-    "coverageDirectory": "./coverage/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Path-AI/vuex-store-builder.git"
