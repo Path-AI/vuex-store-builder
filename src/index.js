@@ -38,10 +38,12 @@ export const vuexStoreBuilder = (
     state = {},
     getters = {},
     mutations = {},
-    actions = {}
+    actions = {},
+    modules = {}
   } = {}
 ) => ({
   namespaced: true,
+  modules,
   state: {
     byId: {},
     [loaded(slug)]: false,

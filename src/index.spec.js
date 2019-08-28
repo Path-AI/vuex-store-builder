@@ -114,6 +114,10 @@ describe("index", () => {
       });
     });
     describe("overrides", () => {
+      it("passes submodules into store", () => {
+        const modules = {};
+        expect(vuexStoreBuilder(slug, call, { modules }).modules).toBe(modules);
+      });
       describe("mutations", () => {
         it("spreads additional provided mutations", () => {
           const extraMutation = jest.fn();
