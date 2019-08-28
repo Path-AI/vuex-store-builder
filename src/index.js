@@ -1,6 +1,20 @@
-import { loaded, errored, requested, received, failed } from "./strings";
-import { requestBuilder, receiveBuilder, failBuilder } from "./mutations";
-import { defaultActionBuilder } from "./actions";
+import _strings, {
+  loaded,
+  errored,
+  requested,
+  received,
+  failed
+} from "./strings";
+import _mutations, {
+  requestBuilder,
+  receiveBuilder,
+  failBuilder
+} from "./mutations";
+import _actions, { defaultActionBuilder } from "./actions";
+
+export const strings = _strings;
+export const mutations = _mutations;
+export const actions = _actions;
 
 export const defaultGetKey = ({ id }) => id;
 
