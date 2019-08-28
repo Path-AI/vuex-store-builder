@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/Path-AI/vuex-store-builder.svg?branch=master)](https://travis-ci.org/Path-AI/vuex-store-builder) [![codecov](https://codecov.io/gh/Path-AI/vuex-store-builder/branch/master/graph/badge.svg)](https://codecov.io/gh/Path-AI/vuex-store-builder)
 
-
 Customizable utility functions to generate vuex stores that facilitate network requests.
 
 ### About
@@ -167,8 +166,7 @@ In order to set a debugger or breakpoint inside of the action or mutation functi
 Most of the default configuration can be overridden through the optional options argument.
 
 ```javascript
-import vuexStoreBuilder from "vuex-store-builder";
-import { loaded } from "vuex-store-builder/strings";
+import vuexStoreBuilder, { strings } from "vuex-store-builder";
 import { getListOfDogs } from "api/dogs";
 
 export const getDogId = ({ dogId }) => dogId;
@@ -196,7 +194,7 @@ export default vuexStoreBuilder("get", getListOfDogs, {
       }
       state.owneridToDogIds[ownerId].push(dogId);
     });
-    state[loaded("get")] = true;
+    state[strings.loaded("get")] = true;
   },
   actions: {
     clearAndGetDogs({ dispatch, commit }) {
