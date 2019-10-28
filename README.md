@@ -133,7 +133,7 @@ export const cats = {
       state.erroredGet = {};
     },
     receivedGet(state, { response, params }) {
-      params.forEach(datum => Vue.set(state.byId, datum.id, datum));
+      response.forEach(datum => Vue.set(state.byId, datum.id, datum));
       state.loadedGet = true;
     },
     failedGet(state, errors) {
