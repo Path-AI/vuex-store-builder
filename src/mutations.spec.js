@@ -17,14 +17,14 @@ describe("mutation builders", () => {
     });
   });
   describe("receiveBuilder", () => {
-    const getKey = jest.fn(({ id }) => id);
+    const getKey = jest.fn(({ id } = {}) => id);
     it("handles data arrays", () => {
       const datum1 = { id: 123 };
       const datum2 = { id: 234 };
       const state = {
         byId: {}
       };
-      receiveBuilder(slug, getKey)(state, [datum1, datum2]);
+      receiveBuilder(slug, getKey)(state, { response: [datum1, datum2] });
       expect(state.byId).toEqual({
         123: datum1,
         234: datum2
@@ -35,7 +35,7 @@ describe("mutation builders", () => {
       const state = {
         byId: {}
       };
-      receiveBuilder(slug, getKey)(state, datum);
+      receiveBuilder(slug, getKey)(state, { response: datum });
       expect(state.byId).toEqual({
         123: datum
       });

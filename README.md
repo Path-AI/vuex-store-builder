@@ -128,12 +128,12 @@ export const cats = {
     errors: state => state.erroredGet.errors
   },
   mutations: {
-    requestedGet(state) {
+    requestedGet(state, params) {
       state.loadedGet = false;
       state.erroredGet = {};
     },
-    receivedGet(state, data) {
-      data.forEach(datum => Vue.set(state.byId, datum.id, datum));
+    receivedGet(state, { response, params }) {
+      params.forEach(datum => Vue.set(state.byId, datum.id, datum));
       state.loadedGet = true;
     },
     failedGet(state, errors) {
@@ -143,14 +143,14 @@ export const cats = {
   actions: {
     async get({ commit }, params) {
       let response;
-      commit("requestedGet");
+      commit("requestedGet", params);
       try {
         response = await getListOfCats(params);
       } catch (error) {
         commit("failedGet", error);
         return error;
       }
-      commit("receivedGet", response);
+      commit("receivedGet", { response, params });
       return response;
     }
   }
@@ -183,8 +183,8 @@ export default vuexStoreBuilder("get", getListOfDogs, {
       state.ownerIdToDogIds = {};
     }
   },
-  receive(state, dogs) {
-    dogs.forEach(dog => {
+  receive(state, { response, params }) {
+    response.forEach(dog => {
       const dogId = getDogId(dog);
       state.byId[dogId] = dog;
 
