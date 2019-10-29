@@ -1,8 +1,9 @@
 import { requested, received, failed } from "./strings";
+import { ActionHandler } from "vuex/types";
 
-export const defaultActionBuilder = (
-  slug,
-  call,
+export const defaultActionBuilder = <S, T>(
+  slug: string,
+  call: (params: any) => Promise<T | T[]>,
   {
     requestedMutationName = requested(slug),
     receivedMutationName = received(slug),
@@ -11,8 +12,8 @@ export const defaultActionBuilder = (
       this.commit(failedMutationName, error);
     }
   } = {}
-) => async ({ commit }, params) => {
-  let response;
+): ActionHandler<S, T> => async ({ commit }, params) => {
+  let response: T | T[];
   commit(requestedMutationName, params);
   try {
     response = await call(params);
