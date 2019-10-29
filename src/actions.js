@@ -13,13 +13,13 @@ export const defaultActionBuilder = (
   } = {}
 ) => async ({ commit }, params) => {
   let response;
-  commit(requestedMutationName);
+  commit(requestedMutationName, params);
   try {
     response = await call(params);
   } catch (error) {
     return catchBlock.call({ commit }, error);
   }
-  commit(receivedMutationName, response);
+  commit(receivedMutationName, { response, params });
   return response;
 };
 

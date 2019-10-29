@@ -23,14 +23,15 @@ describe("actions", () => {
     const requestedMutationName = "requestedMutationName";
     const receivedMutationName = "receivedMutationName";
     const failedMutationName = "failedMutationName";
+    const params = {};
     const response = { response: "response" };
     const error = { error: "error" };
     it.each([
-      [requestedMutationName, () => {}, [requestedMutationName]],
+      [requestedMutationName, () => {}, [requestedMutationName, params]],
       [
         receivedMutationName,
         () => Promise.resolve(response),
-        [receivedMutationName, response],
+        [receivedMutationName, { response, params }],
         1
       ],
       [
@@ -42,14 +43,18 @@ describe("actions", () => {
     ])("%s", async (mutationName, call, args, index = 0) => {
       await defaultActionBuilder(slug, call, {
         [mutationName]: mutationName
-      })({ commit }, {});
+      })({ commit }, params);
       expect(commit.mock.calls[index]).toEqual(args);
     });
   });
-  it("calls action with correct parameters", () => {
+  it("calls action with correct parameters", async () => {
+    const response = {};
     const call = jest.fn();
     const parameters = {};
-    defaultActionBuilder(slug, call)({ commit: () => {} }, parameters);
+    call.mockResolvedValueOnce(response);
+    expect(
+      await defaultActionBuilder(slug, call)({ commit: () => {} }, parameters)
+    ).toBe(response);
     expect(call.mock.calls[0][0]).toBe(parameters);
   });
 });
