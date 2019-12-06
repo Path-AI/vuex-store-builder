@@ -12,7 +12,7 @@ import _mutations, {
 } from "./mutations";
 import _actions, { defaultActionBuilder } from "./actions";
 
-import { VuexStoreBuilderOptions } from "./types";
+import { VuexStoreBuilderOptions } from "../types";
 
 import { Module, Dictionary } from "vuex/types";
 

@@ -1,10 +1,12 @@
 import {
-  MutationTree,
   ActionHandler,
-  GetterTree,
   ActionTree,
+  Dictionary,
+  GetterTree,
+  Module,
   ModuleTree,
-  MutationMethod
+  MutationMethod,
+  MutationTree
 } from "vuex/types";
 
 export interface ActionBuilderOptions {
@@ -14,13 +16,11 @@ export interface ActionBuilderOptions {
   catchBlock?: (error: any) => void;
 }
 
-export interface ActionBuilder<S, R, T> {
-  (
-    slug: string,
-    call: () => Promise<T | T[]>,
-    options: ActionBuilderOptions
-  ): ActionHandler<S, R>;
-}
+export type ActionBuilder<S, R, T> = (
+  slug: string,
+  call: () => Promise<T | T[]>,
+  options: ActionBuilderOptions
+) => ActionHandler<S, R>;
 
 export interface VuexStoreBuilderOptions<S, T, R> {
   getKey: (datum: T) => string | number;
@@ -38,3 +38,19 @@ export interface VuexStoreBuilderOptions<S, T, R> {
   actions?: ActionTree<S, R>;
   modules?: ModuleTree<R>;
 }
+
+export declare function VuexStoreBuilder<
+  S extends { byId: Dictionary<T> },
+  T,
+  R
+>(
+  slug: string,
+  call: (args: any) => Promise<T | T[]>,
+  options: VuexStoreBuilderOptions<S, T, R>
+): Module<S, R>;
+
+declare const _default: {
+  VuexStoreBuilder: typeof VuexStoreBuilder;
+};
+
+export default _default;

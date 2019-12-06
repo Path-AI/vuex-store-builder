@@ -1,6 +1,6 @@
 import { requested, received, failed } from "./strings";
 import { ActionHandler } from "vuex/types";
-import { ActionBuilderOptions } from "./types";
+import { ActionBuilderOptions } from "../types";
 
 export const defaultActionBuilder = <S, R, T>(
   slug: string,

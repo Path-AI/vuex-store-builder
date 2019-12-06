@@ -8,9 +8,11 @@
     "build": "babel src -d build --ignore '**/*.spec.js'",
     "test": "jest",
     "test:coverage": "jest --coverage",
+    "test:types": "tsc -p types/test",
     "test:watch": "npm test -- --watch",
     "prepublish": "npm run build"
   },
+  "typings": "types/index.d.ts",
   "babel": {
     "presets": [
       "minify",
@@ -55,6 +57,7 @@
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1",
+    "typescript": "^3.7.3",
     "vuex": "^3.1.1",
     "watch": "^1.0.2"
   },
