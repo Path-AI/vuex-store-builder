@@ -12,7 +12,9 @@ import _mutations, {
 } from "./mutations";
 import _actions, { defaultActionBuilder } from "./actions";
 
-import { Mutation, ActionHandler } from "vuex/types";
+import { VuexStoreBuilderOptions } from "./types";
+
+import { Module, Dictionary } from "vuex/types";
 
 export const strings = _strings;
 export const mutations = _mutations;
@@ -20,36 +22,7 @@ export const actions = _actions;
 
 export const defaultGetKey = ({ id }) => id;
 
-interface ActionBuilder<S, T> {
-  (
-    slug: string,
-    call: () => Promise<T | T[]>,
-    options: {
-      requestedMutationName: string;
-      receivedMutationName: string;
-      failedMutationName: string;
-    }
-  ): ActionHandler<S, T>;
-}
-
-interface vuexStoreBuilderOptions<S, T> {
-  getKey: (datum: T) => string | number;
-  requestedMutationName?: string;
-  receivedMutationName?: string;
-  failedMutationName?: string;
-  actionBuilder?: ActionBuilder<S, T>;
-  action?: ActionHandler<S, T>;
-  request?: Mutation<S>;
-  receive?: Mutation<S>;
-  fail?: Mutation<S>;
-  state?: S;
-  getters?: object;
-  mutations?: object;
-  actions?: object;
-  modules?: object;
-}
-
-export const vuexStoreBuilder = <S, T>(
+export const vuexStoreBuilder = <S extends { byId: Dictionary<T> }, T, R>(
   slug: string,
   call: () => Promise<T | T[]>,
   {
@@ -64,15 +37,15 @@ export const vuexStoreBuilder = <S, T>(
       failedMutationName
     }),
     request = requestBuilder(slug),
-    receive = receiveBuilder<T>(slug, getKey),
+    receive = receiveBuilder<S, T>(slug, getKey),
     fail = failBuilder(slug),
-    state = {},
+    state = <S>{},
     getters = {},
     mutations = {},
     actions = {},
     modules = {}
-  }: vuexStoreBuilderOptions<S, T>
-) => ({
+  }: VuexStoreBuilderOptions<S, T, R>
+): Module<S, R> => ({
   namespaced: true,
   modules,
   state: {
@@ -82,7 +55,7 @@ export const vuexStoreBuilder = <S, T>(
     ...state
   },
   getters: {
-    list: state => Object.values(state.byId),
+    list: state => Object.keys(state.byId).map(key => state.byId[key]),
     ...getters
   },
   mutations: {

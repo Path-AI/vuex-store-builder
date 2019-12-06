@@ -1,7 +1,8 @@
 import { requested, received, failed } from "./strings";
 import { ActionHandler } from "vuex/types";
+import { ActionBuilderOptions } from "./types";
 
-export const defaultActionBuilder = <S, T>(
+export const defaultActionBuilder = <S, R, T>(
   slug: string,
   call: (params: any) => Promise<T | T[]>,
   {
@@ -11,16 +12,16 @@ export const defaultActionBuilder = <S, T>(
     catchBlock = function(error) {
       this.commit(failedMutationName, error);
     }
-  } = {}
-): ActionHandler<S, T> => async ({ commit }, params) => {
+  }: ActionBuilderOptions = {}
+): ActionHandler<S, R> => async ({ commit }, payload) => {
   let response: T | T[];
-  commit(requestedMutationName, params);
+  commit(requestedMutationName, payload);
   try {
-    response = await call(params);
+    response = await call(payload);
   } catch (error) {
     return catchBlock.call({ commit }, error);
   }
-  commit(receivedMutationName, { response, params });
+  commit(receivedMutationName, { response, payload });
   return response;
 };
 
