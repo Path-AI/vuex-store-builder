@@ -1,4 +1,5 @@
 import {
+  Action,
   ActionHandler,
   ActionTree,
   Dictionary,
@@ -6,7 +7,9 @@ import {
   Module,
   ModuleTree,
   MutationMethod,
-  MutationTree
+  MutationTree,
+  Store,
+  StoreOptions
 } from "vuex/types";
 
 export interface ActionBuilderOptions {
@@ -18,36 +21,32 @@ export interface ActionBuilderOptions {
 
 export type ActionBuilder<S, R, T> = (
   slug: string,
-  call: () => Promise<T | T[]>,
+  call: (args: any) => Promise<T>,
   options: ActionBuilderOptions
-) => ActionHandler<S, R>;
+) => Action<S, R>;
 
-export interface VuexStoreBuilderOptions<S, T, R> {
+export interface VuexStoreBuilderOptions<S, T> {
   getKey: (datum: T) => string | number;
   requestedMutationName?: string;
   receivedMutationName?: string;
   failedMutationName?: string;
-  actionBuilder?: ActionBuilder<S, R, T>;
-  action?: ActionHandler<S, R>;
+  actionBuilder?: ActionBuilder<S, any, T>;
+  action?: ActionHandler<S, any>;
   request?: MutationMethod;
   receive?: MutationMethod;
   fail?: MutationMethod;
   state?: S;
-  getters?: GetterTree<S, R>;
+  getters?: GetterTree<S, any>;
   mutations?: MutationTree<S>;
-  actions?: ActionTree<S, R>;
-  modules?: ModuleTree<R>;
+  actions?: ActionTree<S, any>;
+  modules?: ModuleTree<S>;
 }
 
-export declare function VuexStoreBuilder<
-  S extends { byId: Dictionary<T> },
-  T,
-  R
->(
+export declare function VuexStoreBuilder<S extends { byId: Dictionary<T> }, T>(
   slug: string,
-  call: (args: any) => Promise<T | T[]>,
-  options: VuexStoreBuilderOptions<S, T, R>
-): Module<S, R>;
+  call: (...args: any[]) => Promise<T>,
+  options: VuexStoreBuilderOptions<S, T>
+): StoreOptions<S>;
 
 declare const _default: {
   VuexStoreBuilder: typeof VuexStoreBuilder;

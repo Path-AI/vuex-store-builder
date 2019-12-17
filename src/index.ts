@@ -24,7 +24,7 @@ export const defaultGetKey = ({ id }) => id;
 
 export const vuexStoreBuilder = <S extends { byId: Dictionary<T> }, T, R>(
   slug: string,
-  call: () => Promise<T | T[]>,
+  call: (args: any) => Promise<T>,
   {
     getKey,
     requestedMutationName = requested(slug),

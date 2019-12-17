@@ -4,7 +4,7 @@ import { ActionBuilderOptions } from "../types";
 
 export const defaultActionBuilder = <S, R, T>(
   slug: string,
-  call: (params: any) => Promise<T | T[]>,
+  call: (...args: any[]) => Promise<T>,
   {
     requestedMutationName = requested(slug),
     receivedMutationName = received(slug),
@@ -14,7 +14,7 @@ export const defaultActionBuilder = <S, R, T>(
     }
   }: ActionBuilderOptions = {}
 ): ActionHandler<S, R> => async ({ commit }, payload) => {
-  let response: T | T[];
+  let response: T;
   commit(requestedMutationName, payload);
   try {
     response = await call(payload);
