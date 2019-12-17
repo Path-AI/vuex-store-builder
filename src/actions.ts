@@ -4,7 +4,7 @@ import { ActionBuilderOptions } from "../types";
 
 export const defaultActionBuilder = <S, R, T>(
   slug: string,
-  call: (...args: any[]) => Promise<T>,
+  call: (payload?: any) => Promise<T>,
   {
     requestedMutationName = requested(slug),
     receivedMutationName = received(slug),

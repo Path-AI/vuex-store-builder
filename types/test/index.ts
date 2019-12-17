@@ -38,6 +38,9 @@ namespace AnimalTest {
     getKey: cat => cat.id
   });
   const catStore = new Vuex.Store(catStoreOptions);
-  type test = typeof catStore;
-  catStore.dispatch("build");
+  catStore.dispatch("build", {
+    name: "Oliver",
+    breed: CatBreed.SNOWSHOE_SIAMESE,
+    birthday: new Date("06/01/2010")
+  });
 }

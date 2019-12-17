@@ -19,18 +19,18 @@ export interface ActionBuilderOptions {
   catchBlock?: (error: any) => void;
 }
 
-export type ActionBuilder<S, R, T> = (
+export type ActionBuilder<S, T> = (
   slug: string,
-  call: (args: any) => Promise<T>,
+  call: (payload?: any) => Promise<T>,
   options: ActionBuilderOptions
-) => Action<S, R>;
+) => Action<S, any>;
 
 export interface VuexStoreBuilderOptions<S, T> {
   getKey: (datum: T) => string | number;
   requestedMutationName?: string;
   receivedMutationName?: string;
   failedMutationName?: string;
-  actionBuilder?: ActionBuilder<S, any, T>;
+  actionBuilder?: ActionBuilder<S, T>;
   action?: ActionHandler<S, any>;
   request?: MutationMethod;
   receive?: MutationMethod;
