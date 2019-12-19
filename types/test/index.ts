@@ -13,6 +13,10 @@ namespace AnimalTest {
       this.breed = breed;
       this.id = Animal.counter++;
     }
+
+    static getId(animal: Animal<any>) {
+      return animal.id;
+    }
   }
   enum CatBreed {
     SNOWSHOE_SIAMESE,
@@ -21,26 +25,24 @@ namespace AnimalTest {
   }
   class Cat extends Animal<CatBreed> {}
 
-  enum DogBreed {
-    CORGI,
-    BICHON_FRISE,
-    BERNESE_MOUNTAIN_DOG,
-    LAB,
-    GOLDEN_RETRIEVER
-  }
-  class Dog extends Animal<DogBreed> {}
   type CatState = {
     byId: {};
   };
+
   const buildCat = (name: string, breed: CatBreed, birthday?: Date) =>
     Promise.resolve(new Cat(name, breed, birthday));
   const catStoreOptions = VuexStoreBuilder<CatState, Cat>("build", buildCat, {
-    getKey: cat => cat.id
+    getKey: Animal.getId
   });
   const catStore = new Vuex.Store(catStoreOptions);
   catStore.dispatch("build", {
     name: "Oliver",
     breed: CatBreed.SNOWSHOE_SIAMESE,
     birthday: new Date("06/01/2010")
+  });
+  catStore.dispatch("build", {
+    name: "Max",
+    breed: CatBreed.MAINE_COON,
+    birthday: new Date("02/25/2010")
   });
 }
