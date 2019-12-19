@@ -7,7 +7,7 @@ export const requestBuilder = <S>(slug: string): Mutation<S> =>
     state[errored(slug)] = {};
   };
 
-export const receiveBuilder = <S extends { byId: object }, T>(
+export const receiveBuilder = <S extends { byId?: object }, T>(
   slug: string,
   getKey: (datum: T) => string | number
 ): Mutation<S> =>

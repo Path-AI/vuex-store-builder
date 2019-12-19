@@ -22,7 +22,7 @@ export const actions = _actions;
 
 export const defaultGetKey = ({ id }) => id;
 
-export const vuexStoreBuilder = <S extends { byId: Dictionary<T> }, T, R>(
+export const vuexStoreBuilder = <S extends { byId?: Dictionary<T> }, T>(
   slug: string,
   call: (payload?: any) => Promise<T>,
   {
@@ -43,10 +43,11 @@ export const vuexStoreBuilder = <S extends { byId: Dictionary<T> }, T, R>(
     getters = {},
     mutations = {},
     actions = {},
-    modules = {}
-  }: VuexStoreBuilderOptions<S, T, R>
-): Module<S, R> => ({
-  namespaced: true,
+    modules = {},
+    namespaced = true
+  }: VuexStoreBuilderOptions<S, T>
+): Module<S, any> => ({
+  namespaced,
   modules,
   state: {
     byId: {},

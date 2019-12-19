@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["es5", "dom", "es2015.promise", "ESNext"],
+    "strict": true,
+    "noEmit": true
+  },
+  "include": ["../../**/*.d.ts", "../../../src/*.ts"]
+}

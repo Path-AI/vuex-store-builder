@@ -1,6 +1,5 @@
 import {
   Action,
-  ActionHandler,
   ActionTree,
   Dictionary,
   GetterTree,
@@ -31,7 +30,7 @@ export interface VuexStoreBuilderOptions<S, T> {
   receivedMutationName?: string;
   failedMutationName?: string;
   actionBuilder?: ActionBuilder<S, T>;
-  action?: ActionHandler<S, any>;
+  action?: Action<S, any>;
   request?: MutationMethod;
   receive?: MutationMethod;
   fail?: MutationMethod;
@@ -40,6 +39,7 @@ export interface VuexStoreBuilderOptions<S, T> {
   mutations?: MutationTree<S>;
   actions?: ActionTree<S, any>;
   modules?: ModuleTree<S>;
+  namespaced?: boolean;
 }
 
 export declare function VuexStoreBuilder<S extends { byId: Dictionary<T> }, T>(
