@@ -12,9 +12,7 @@ import _mutations, {
 } from "./mutations";
 import _actions, { defaultActionBuilder } from "./actions";
 
-import { VuexStoreBuilderOptions } from "../types";
-
-import { Module, Dictionary } from "vuex/types";
+import { VuexStoreBuilder } from "../types";
 
 export const strings = _strings;
 export const mutations = _mutations;
@@ -22,9 +20,9 @@ export const actions = _actions;
 
 export const defaultGetKey = ({ id }) => id;
 
-export const vuexStoreBuilder = <S extends { byId?: Dictionary<T> }, T>(
-  slug: string,
-  call: (payload?: any) => Promise<T>,
+export const vuexStoreBuilder: VuexStoreBuilder<any, any> = (
+  slug,
+  call,
   {
     getKey,
     requestedMutationName = requested(slug),
@@ -37,16 +35,16 @@ export const vuexStoreBuilder = <S extends { byId?: Dictionary<T> }, T>(
       failedMutationName
     }),
     request = requestBuilder(slug),
-    receive = receiveBuilder<S, T>(slug, getKey),
+    receive = receiveBuilder<any, any>(slug, getKey),
     fail = failBuilder(slug),
-    state = <S>{},
+    state = {},
     getters = {},
     mutations = {},
     actions = {},
     modules = {},
     namespaced = true
-  }: VuexStoreBuilderOptions<S, T>
-): Module<S, any> => ({
+  }
+) => ({
   namespaced,
   modules,
   state: {
