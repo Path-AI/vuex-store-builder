@@ -11,12 +11,12 @@ import {
   StoreOptions
 } from "vuex/types";
 
-export interface ActionBuilderOptions {
+export type ActionBuilderOptions = {
   requestedMutationName?: string;
   receivedMutationName?: string;
   failedMutationName?: string;
   catchBlock?: (error: any) => void;
-}
+};
 
 export type ActionBuilder<S, T> = (
   slug: string,
@@ -24,7 +24,7 @@ export type ActionBuilder<S, T> = (
   options: ActionBuilderOptions
 ) => Action<S, any>;
 
-export interface VuexStoreBuilderOptions<S, T> {
+export type VuexStoreBuilderOptions<S, T> = {
   getKey: (datum: T) => string | number;
   requestedMutationName?: string;
   receivedMutationName?: string;
@@ -40,16 +40,10 @@ export interface VuexStoreBuilderOptions<S, T> {
   actions?: ActionTree<S, any>;
   modules?: ModuleTree<S>;
   namespaced?: boolean;
-}
+};
 
-export declare function VuexStoreBuilder<S extends { byId: Dictionary<T> }, T>(
+export type VuexStoreBuilder<S extends { byId: Dictionary<T> }, T> = (
   slug: string,
   call: (...args: any[]) => Promise<T>,
   options: VuexStoreBuilderOptions<S, T>
-): StoreOptions<S>;
-
-declare const _default: {
-  VuexStoreBuilder: typeof VuexStoreBuilder;
-};
-
-export default _default;
+) => StoreOptions<S>;
