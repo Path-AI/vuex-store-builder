@@ -3,11 +3,9 @@ import {
   ActionTree,
   Dictionary,
   GetterTree,
-  Module,
   ModuleTree,
   MutationMethod,
   MutationTree,
-  Store,
   StoreOptions
 } from "vuex/types";
 
