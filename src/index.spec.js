@@ -45,7 +45,7 @@ describe("index", () => {
             ["received", received],
             ["failed", failed]
           ])("%s receives slug", (name, builder) => {
-            vuexStoreBuilder(slug, call);
+            vuexStoreBuilder(slug, call, {});
             expect(builder.mock.calls[0][0]).toBe(slug);
           });
         });
@@ -55,7 +55,7 @@ describe("index", () => {
             ["receiveBuilder", receiveBuilder, [slug, defaultGetKey]],
             ["failBuilder", failBuilder, [slug]]
           ])("%s receives %s as arguments", (name, builder, args) => {
-            vuexStoreBuilder(slug, call);
+            vuexStoreBuilder(slug, call, {});
             expect(builder.mock.calls[0]).toEqual(args);
           });
         });
@@ -67,7 +67,7 @@ describe("index", () => {
         requested.mockImplementationOnce(() => requestedMutationName);
         received.mockImplementationOnce(() => receivedMutationName);
         failed.mockImplementationOnce(() => failedMutationName);
-        vuexStoreBuilder(slug, call);
+        vuexStoreBuilder(slug, call, {});
         expect(defaultActionBuilder.mock.calls[0]).toEqual([
           slug,
           call,
@@ -81,7 +81,7 @@ describe("index", () => {
       describe("generated store has expected shape", () => {
         let store;
         beforeEach(() => {
-          store = vuexStoreBuilder(slug, call);
+          store = vuexStoreBuilder(slug, call, {});
         });
         it("is namespaced", () => {
           expect(store.namespaced).toBe(true);

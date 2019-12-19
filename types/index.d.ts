@@ -16,9 +16,11 @@ export type ActionBuilderOptions = {
   catchBlock?: (error: any) => void;
 };
 
+export type Call<T> = (payload?: any) => Promise<T>;
+
 export type ActionBuilder<S, T> = (
   slug: string,
-  call: (payload?: any) => Promise<T>,
+  call: Call<T>,
   options: ActionBuilderOptions
 ) => Action<S, any>;
 
@@ -42,6 +44,6 @@ export type VuexStoreBuilderOptions<S, T> = {
 
 export type VuexStoreBuilder<S extends { byId: Dictionary<T> }, T> = (
   slug: string,
-  call: (...args: any[]) => Promise<T>,
+  call: Call<T>,
   options: VuexStoreBuilderOptions<S, T>
 ) => StoreOptions<S>;
