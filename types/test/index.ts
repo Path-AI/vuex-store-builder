@@ -1,7 +1,7 @@
 import Vuex from "vuex";
-import { VuexStoreBuilder } from "../index";
+import { vuexStoreBuilder } from "../../src";
 namespace AnimalTest {
-  abstract class Animal<B> {
+  class Animal<B> {
     private static counter = 0;
     id: number;
     name: string;
@@ -31,7 +31,7 @@ namespace AnimalTest {
 
   const buildCat = (name: string, breed: CatBreed, birthday?: Date) =>
     Promise.resolve(new Cat(name, breed, birthday));
-  const catStoreOptions = VuexStoreBuilder<CatState, Cat>("build", buildCat, {
+  const catStoreOptions = vuexStoreBuilder<CatState, Cat>("build", buildCat, {
     getKey: Animal.getId
   });
   const catStore = new Vuex.Store(catStoreOptions);

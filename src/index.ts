@@ -13,14 +13,13 @@ import _mutations, {
 import _actions, { defaultActionBuilder } from "./actions";
 
 import { VuexStoreBuilder } from "../types";
+import { StoreOptions, Dictionary } from "vuex";
 
 export const strings = _strings;
 export const mutations = _mutations;
 export const actions = _actions;
 
-export const defaultGetKey = ({ id }) => id;
-
-export const vuexStoreBuilder: VuexStoreBuilder<any, any> = (
+const vuexStoreBuilder: VuexStoreBuilder<S, T> = function<S, T>( // this doesn't work :(
   slug,
   call,
   {
@@ -35,38 +34,36 @@ export const vuexStoreBuilder: VuexStoreBuilder<any, any> = (
       failedMutationName
     }),
     request = requestBuilder(slug),
-    receive = receiveBuilder<any, any>(slug, getKey),
+    receive = receiveBuilder<S, T>(slug, getKey),
     fail = failBuilder(slug),
     state = {},
     getters = {},
     mutations = {},
     actions = {},
-    modules = {},
-    namespaced = true
+    modules = {}
   }
-) => ({
-  namespaced,
-  modules,
-  state: {
-    byId: {},
-    [loaded(slug)]: false,
-    [errored(slug)]: undefined,
-    ...state
-  },
-  getters: {
-    list: state => Object.keys(state.byId).map(key => state.byId[key]),
-    ...getters
-  },
-  mutations: {
-    [requestedMutationName]: request,
-    [receivedMutationName]: receive,
-    [failedMutationName]: fail,
-    ...mutations
-  },
-  actions: {
-    [slug]: action,
-    ...actions
-  }
-});
-
-export default vuexStoreBuilder;
+): StoreOptions<S> {
+  return {
+    modules,
+    state: {
+      byId: {},
+      [loaded(slug)]: false,
+      [errored(slug)]: undefined,
+      ...state
+    },
+    getters: {
+      list: state => Object.keys(state.byId).map(key => state.byId[key]),
+      ...getters
+    },
+    mutations: {
+      [requestedMutationName]: request,
+      [receivedMutationName]: receive,
+      [failedMutationName]: fail,
+      ...mutations
+    },
+    actions: {
+      [slug]: action,
+      ...actions
+    }
+  };
+};
