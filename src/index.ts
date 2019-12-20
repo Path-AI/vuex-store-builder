@@ -19,7 +19,7 @@ export const strings = _strings;
 export const mutations = _mutations;
 export const actions = _actions;
 
-const vuexStoreBuilder: VuexStoreBuilder<S, T> = function<S, T>( // this doesn't work :(
+export const vuexStoreBuilder: VuexStoreBuilder<S, T> = function<S, T>( // this doesn't work :(
   slug,
   call,
   {
