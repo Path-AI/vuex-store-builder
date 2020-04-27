@@ -1,6 +1,6 @@
 {
   "name": "vuex-store-builder",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Customizable utility functions to generate vuex stores, facilitating network requests.",
   "main": "build/index.js",
   "scripts": {
